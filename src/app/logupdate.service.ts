@@ -42,6 +42,7 @@ export class CheckForUpdateService {
     const everySixHoursOnceAppIsStable$ = concat(appIsStable$, everySixHours$);
     everySixHoursOnceAppIsStable$.subscribe(async () => {
       try {
+        console.log('checking for update')
         const updateFound = await updates.checkForUpdate();
         console.log(updateFound ? 'A new version is available.' : 'Already on the latest version.');
       } catch (err) {
