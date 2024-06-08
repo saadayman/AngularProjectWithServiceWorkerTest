@@ -1,27 +1,31 @@
 import {Injectable} from '@angular/core'
 import {SwUpdate} from '@angular/service-worker'
-@Injectable({providedIn: 'root'})
 export class LogUpdateService {
-  constructor(updates: SwUpdate) {
-    console.log('invoked')
+  constructor(private updates: SwUpdate) {
     updates.versionUpdates.subscribe((evt) => {
-      console.log('evt',evt)
       switch (evt.type) {
         case 'VERSION_DETECTED':
           console.log(`Downloading new app version: ${evt.version.hash}`);
+          alert(`Downloading new app version: ${evt.version.hash}`);
           break;
         case 'VERSION_READY':
-          console.log(`Current app version: ${evt.currentVersion.hash}`);
           console.log(`New app version ready for use: ${evt.latestVersion.hash}`);
+          const r = confirm(`New app version ready. Reload to update?`);
+          if (r) {
+            this.doAppUpdate();
+          }
           break;
         case 'VERSION_INSTALLATION_FAILED':
-          console.log(`Failed to install app version '${evt.version.hash}': ${evt.error}`);
+          alert(`Failed to install app version '${evt.version.hash}': ${evt.error}`);
           break;
       }
     });
   }
-}
 
+  private doAppUpdate() {
+    this.updates.activateUpdate().then(() => document.location.reload());
+  }
+}
 import {ApplicationRef} from '@angular/core';
 import {concat, interval} from 'rxjs';
 import {first} from 'rxjs/operators';

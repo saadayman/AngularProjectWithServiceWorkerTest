@@ -1,6 +1,6 @@
 import { Component, OnInit, PLATFORM_ID } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import {SwPush} from '@angular/service-worker'
+import {SwPush, SwUpdate} from '@angular/service-worker'
 import { HttpClient } from '@angular/common/http';
 import {YouTubePlayer} from '@angular/youtube-player';
 import { GooglePayButtonModule } from "@google-pay/button-angular";
@@ -19,7 +19,7 @@ import { CheckForUpdateService, LogUpdateService } from './logupdate.service';
 })
 export class AppComponent  {
   VAPID_PUBLIC_KEY: string= 'BOncXD2WECeZZs8Q14-0lY-12G7xgsSUyEDUocPGtmFfUeYQADWIhD1tIwtHqdgGYnNckNKZZtN_GZsNkc9lStg'
-  constructor(private swPush: SwPush,public http:HttpClient,public logupdateService:LogUpdateService,public _CheckForUpdateService:CheckForUpdateService) {
+  constructor(private swPush: SwPush,private updates: SwUpdate,public http:HttpClient,public logupdateService:LogUpdateService,public _CheckForUpdateService:CheckForUpdateService) {
   }
   platform:any
   ngOnInit(): void {
@@ -30,6 +30,13 @@ export class AppComponent  {
       console.log('MESSAGE',message)
     })
 
+  }
+  checkForUpdates() {
+    this.updates.checkForUpdate().then(() => {
+      console.log('Check for updates completed');
+    }).catch(err => {
+      console.error('Failed to check for updates:', err);
+    });
   }
   onLoadPaymentData($event:any){
     console.log($event)
