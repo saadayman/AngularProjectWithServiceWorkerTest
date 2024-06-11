@@ -33,8 +33,10 @@ export class AppComponent  {
   }
   checkForUpdates() {
     this.updates.checkForUpdate().then(() => {
+      alert('Check for updates completed')
       console.log('Check for updates completed');
     }).catch(err => {
+      alert(err)
       console.error('Failed to check for updates:', err);
     });
   }
