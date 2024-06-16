@@ -31,6 +31,7 @@ export class AppComponent implements OnInit {
       console.log(subscription);
     });
     this.subscribeToNotifications()
+    alert('should ask for permission')
     this.swPush.messages.subscribe((message) => {
       console.log(message);
     });
