@@ -23,7 +23,13 @@ export class NotificationsService {
     const subscription = await this.swPush.requestSubscription({
       serverPublicKey: 'BOncXD2WECeZZs8Q14-0lY-12G7xgsSUyEDUocPGtmFfUeYQADWIhD1tIwtHqdgGYnNckNKZZtN_GZsNkc9lStg'
     });
+    
     console.log('https://testwebpushapi.onrender.com')
     return this.http.post<any>(`https://testwebpushapi.onrender.com/save/push`, subscription);
   }
+  public disableNotifications(){
+    this.swPush.unsubscribe()
+    alert('This device will no longer recieve notifications')
+  }
 }
+

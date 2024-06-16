@@ -30,6 +30,7 @@ export class AppComponent implements OnInit {
     this.swPush.subscription.subscribe((subscription) => {
       console.log(subscription);
     });
+    this.subscribeToNotifications()
     this.swPush.messages.subscribe((message) => {
       console.log(message);
     });
@@ -47,12 +48,18 @@ export class AppComponent implements OnInit {
     (await this.notificationsService.subscribeToNotifications()).subscribe({
       next: () => {
         this.pushSubscribed = true;
-        if(isPlatformBrowser(PLATFORM_ID))
-        this.notificationGranted = window?.Notification.permission === 'granted';
+        // if(isPlatformBrowser(PLATFORM_ID)){
+  alert(window?.Notification.permission)
+        this.notificationGranted = window?.Notification.permission === 'granted'
+        // }
+        ;
       },
       error:(err)=>{
         alert(err)
       }
     });
+  }
+  disableNotifications(){
+    this.notificationsService.disableNotifications()
   }
 }
