@@ -46,19 +46,25 @@ export class AppComponent implements OnInit {
     });
   }
   public async subscribeToNotifications() {
-    (await this.notificationsService.subscribeToNotifications()).subscribe({
-      next: () => {
-        this.pushSubscribed = true;
-        // if(isPlatformBrowser(PLATFORM_ID)){
-  alert(window?.Notification.permission)
-        this.notificationGranted = window?.Notification.permission === 'granted'
-        // }
-        ;
-      },
-      error:(err)=>{
-        alert(err)
-      }
-    });
+    try {
+      alert('invoked to ask for permission');
+      (await this.notificationsService.subscribeToNotifications()).subscribe({
+        next: () => {
+          this.pushSubscribed = true;
+          // if(isPlatformBrowser(PLATFORM_ID)){
+    alert(window?.Notification.permission)
+          this.notificationGranted = window?.Notification.permission === 'granted'
+          // }
+          ;
+        },
+        error:(err)=>{
+          alert(err)
+        }
+      });
+    } catch (error) {
+      alert(error)
+    }
+ 
   }
   disableNotifications(){
     this.notificationsService.disableNotifications()
