@@ -2,11 +2,13 @@ import { Component, OnInit, PLATFORM_ID } from '@angular/core';
 import { SwPush, SwRegistrationOptions, SwUpdate } from '@angular/service-worker';
 import { NotificationsService } from './services/notifications.service';
 import { isPlatformBrowser } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.sass'],
+  imports:[RouterModule],
   standalone:true,
 })
 export class AppComponent implements OnInit {
@@ -26,15 +28,15 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.isOnline = this.sw.enabled;
-    this.swPush.subscription.subscribe((subscription) => {
-      console.log(subscription);
-    });
-    this.subscribeToNotifications()
-    alert('should ask for permission')
-    this.swPush.messages.subscribe((message) => {
-      console.log(message);
-    });
+    // this.isOnline = this.sw.enabled;
+    // this.swPush.subscription.subscribe((subscription) => {
+    //   console.log(subscription);
+    // });
+    // this.subscribeToNotifications()
+    // alert('should ask for permission')
+    // this.swPush.messages.subscribe((message) => {
+    //   console.log(message);
+    // });
   }
   checkForUpdates() {
     this.updates.checkForUpdate().then(() => {
