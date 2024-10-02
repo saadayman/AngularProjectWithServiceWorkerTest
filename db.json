@@ -1,0 +1,19 @@
+{
+    "clients": [
+      {
+        "id": 1,
+        "clientId": "client1",
+        "textColor": "orange",
+        "backgroundColor": "green",
+        "theme": "light"
+      },
+      {
+        "id": 2,
+        "clientId": "client2",
+        "textColor": "red",
+        "backgroundColor": "orange",
+        "theme": "dark"
+      }
+    ]
+  }
+  

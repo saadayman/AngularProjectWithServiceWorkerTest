@@ -1,0 +1,13 @@
+:root {
+  --text-color: #000; /* Default text color */
+  --background-color: #fff; /* Default background color */
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+h1 {
+  color: var(--text-color);
+}
