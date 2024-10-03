@@ -1,4 +1,4 @@
-import { Component, Renderer2 } from '@angular/core';
+import { afterNextRender, Component, EnvironmentInjector, inject, Renderer2 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ClientIdService } from '../services/client-id-service.service';
 
@@ -15,10 +15,16 @@ export class TestClientComponent {
     private clientIdService: ClientIdService,
     private renderer: Renderer2
   ) {}
+  private environmentInjector = inject(EnvironmentInjector);
+
   clientId: string = '';
+  localStorageVal:any=''
   clientConfig: any = {};
  async ngOnInit(): Promise<any> {
     // Get clientId from the route parameters
+    afterNextRender(()=>{
+      this.localStorageVal = JSON.stringify(localStorage.getItem('clientsConfig'))
+    },{injector:this.environmentInjector})
     this.route.paramMap.subscribe(async(params) => {
       this.clientId = params.get('clientId') || '';
 
