@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { afterNextRender, Component, EnvironmentInjector, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -14,9 +14,17 @@ import { Router } from '@angular/router';
     </div>
   `,
 })
-export class WelcomeComponent {
+export class WelcomeComponent  implements OnInit{
   clientId: string='';
+  private environmentInjector = inject(EnvironmentInjector);
 
+  localStorageVal:any=''
+  clientConfig: any = {};
+ngOnInit(): void {
+  afterNextRender(()=>{
+    this.localStorageVal = JSON.stringify(localStorage.getItem('clientsConfig'))
+  },{injector:this.environmentInjector})
+}
   constructor(private router: Router) {}
 
   onSubmit() {
