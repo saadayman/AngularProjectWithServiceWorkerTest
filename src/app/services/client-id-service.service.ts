@@ -1,6 +1,6 @@
 import { afterNextRender, EnvironmentInjector, inject, Injectable, Injector  } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -10,14 +10,30 @@ export class ClientIdService {
   constructor(private router: Router, private http: HttpClient) {}
   private environmentInjector = inject(EnvironmentInjector);
 
-  fetchClients(clientId?:string): Observable<any> {
-    // Example API call to get clientId (or use localStorage as fallback)
-    const apiUrl = 'http://localhost:3008/clients';
-
-    return this.http.get(`${apiUrl}`);
-
-    
+  fetchClients(clientId?: string): Observable<any> {
+    const staticData = {
+      clients: [
+        {
+          id: 1,
+          clientId: "client1",
+          textColor: "orange",
+          backgroundColor: "green",
+          theme: "light"
+        },
+        {
+          id: 2,
+          clientId: "client2",
+          textColor: "red",
+          backgroundColor: "orange",
+          theme: "dark"
+        }
+      ]
+    };
+  
+    // Instead of making an API call, return the static data as an Observable
+    return of(staticData);
   }
+  
   fetchClientConfig(clientId: string): Promise<any> {
     return new Promise((resolve) => {
       afterNextRender(() => {
